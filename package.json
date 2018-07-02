@@ -1,0 +1,16 @@
+{
+  "name": "react-webpack-config",
+  "version": "1.0.0",
+  "description": "NPM Package wth webpack configuration ready to run a React project",
+  "author": "ivanrodricalleja <ivanrodricalleja@gmail.com>, franmolmedo <franmolmedo@gmail.com>",
+  "main": "index.js",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NoCountryForGeeks/react-webpack-config.git"
+  },
+  "bugs": {
+    "url": "https://github.com/NoCountryForGeeks/react-webpack-config/issues"
+  },
+  "homepage": "https://github.com/NoCountryForGeeks/react-webpack-config#readme"
+}
