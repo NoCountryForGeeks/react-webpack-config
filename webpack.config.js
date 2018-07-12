@@ -10,7 +10,7 @@ const {
     cssLoaderStrategy,
     cssExtract,
     cssMinify,
-    devServer,
+    devServerUseStatusBar,
     faviconGenerator,
     fontLoader,
     generateSourceMaps,
@@ -41,22 +41,24 @@ const ENVIROMENTS = Object.freeze({
     PRODUCTION: 'production'
 });
 
+const currentWorkingDirectory = process.cwd();
 const PATHS = Object.freeze({
-    ROOTFOLDER: path.resolve(__dirname, '/'),
-    APPFOLDER: path.join(__dirname, 'app'),
-    OUTPUTFOLDER: path.join(__dirname, 'build'),
+    ROOTFOLDER: path.resolve(currentWorkingDirectory, '/'),
+    APPFOLDER: path.join(currentWorkingDirectory, 'app'),
+    OUTPUTFOLDER: path.join(currentWorkingDirectory, 'build'),
     HTMLTEMPLATE: path.join(__dirname, 'index.template.html'),
-    NODE_MODULES: path.join(__dirname, 'node_modules'),
-    FONTSFOLDER: path.join(__dirname, 'app/content/fonts'),
-    LANGUAGESFOLDER: path.join(__dirname, 'app/content/i18n'),
-    REPORTFOLDER: path.join(__dirname, 'reports'),
+    NODE_MODULES: path.join(currentWorkingDirectory, 'node_modules'),
+    FONTSFOLDER: path.join(currentWorkingDirectory, 'app/content/fonts'),
+    LANGUAGESFOLDER: path.join(currentWorkingDirectory, 'app/content/i18n'),
+    REPORTFOLDER: path.join(currentWorkingDirectory, 'reports'),
     STATICSFOLDER: 'statics',
     LANGUAGEOUTPUT: 'content/i18n',
     FONTSOUTPUT: 'content/fonts',
     IMAGEOUTPUT: 'content/images',
     ANALYZERSTATS: 'analyzer-stats.json',
     ANALYZERREPORT: '/analyzer-report.html',
-    FAVICON: './app/content/favicon/favicon.svg',
+    MONITORSTATS: 'monitor-stats.json',
+    FAVICON: path.join(currentWorkingDirectory, 'app/content/favicon/favicon.svg'),
     FAVICONOUTPUT: 'content/favicons',
     SVGSPRITE: 'content/sprites/svg/sprite-[hash:6].svg'
 });
@@ -71,6 +73,7 @@ const alias = Object.freeze({
 const commonConfiguration = () =>
     merge([
         {
+            context: currentWorkingDirectory,
             output: {
                 path: PATHS.OUTPUTFOLDER,
                 publicPath: '/',
@@ -78,6 +81,7 @@ const commonConfiguration = () =>
             },
             resolve: { alias }
         },
+        htmlUseTemplate({ template: PATHS.HTMLTEMPLATE }),
         jsLoader({ include: PATHS.APPFOLDER, exclude: PATHS.NODE_MODULES }),
         jsScriptLoader(),
         fontLoader({
@@ -105,7 +109,7 @@ const commonConfiguration = () =>
         faviconGenerator({
             logo: PATHS.FAVICON,
             prefix: `${PATHS.FAVICONOUTPUT}/[hash]-`
-        }),
+        })
     ]);
 
 const developmentConfiguration = () =>
@@ -117,14 +121,8 @@ const developmentConfiguration = () =>
             }
         },
         cssLoader({ use: cssLoaderStrategy({ hashedLocalIndentName: false }) }),
-        devServer({
-            host: '0.0.0.0',
-            port: 8080,
-            open: false,
-            stats: 'errors-only'
-        }),
+        devServerUseStatusBar(),
         hotModuleReplacement(),
-        htmlUseTemplate({ template: PATHS.HTMLTEMPLATE }),
         generateSourceMaps({ sourceMapType: 'source-map' })
     ]);
 
@@ -136,7 +134,6 @@ const productionConfiguration = () =>
                 app: PATHS.APPFOLDER
             }
         },
-        htmlUseTemplate({ template: PATHS.HTMLTEMPLATE }),
         jsMinifyer(),
         optimizeChunk(),
         generateSourceMaps({ sourceMapType: 'source-map' }),

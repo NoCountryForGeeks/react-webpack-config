@@ -7,6 +7,7 @@ module.exports = {
     cssLoaderStrategy: require('./css/css-loader-strategy'),
     cssMinify: require('./css/css-minify'),
     devServer: require('./devServer/webpack-dev-server'),
+    devServerUseStatusBar: require('./devServer/dev-server-use-statusBar'),
     faviconGenerator: require('./favicon/favicon-generator'),
     fontLoader: require('./font/font-loader'),
     generateSourceMaps: require('./sourceMaps/generate-source-maps'),
@@ -29,5 +30,5 @@ module.exports = {
     loadLanguages: require('./internacionalization/load-languages'),
     reportAnalyzer: require('./report/report-analyzer'),
     svgSpriteLoader: require('./sprite/svg-sprite-loader'),
-    compression: require('./compression/compression')
+    compression: require('./compression/compression'),
 };
