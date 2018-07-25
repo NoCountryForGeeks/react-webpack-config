@@ -8,9 +8,6 @@ module.exports = () => ({
             'webpack/hot/only-dev-server'
         ]
     },
-    devServer: {
-        hot: true
-    },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NamedModulesPlugin()

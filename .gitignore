@@ -1,0 +1,8 @@
+node_modules
+.vscode
+.vs
+
+.eslintcache
+.wwp-cache/
+
+*.log
